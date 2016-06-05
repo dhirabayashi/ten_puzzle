@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+mainClassName = 'com.github.dhirabayashi.tenpuzzle.TenPuzzle'
+
+jar {
+    baseName = 'ten_puzzle'
+    version =  '1.0.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    testCompile("junit:junit:4.12")
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    compile 'org.eclipse.collections:eclipse-collections-api:7.1.0'
+    compile 'org.eclipse.collections:eclipse-collections:7.1.0'
+}
