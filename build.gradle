@@ -28,7 +28,16 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+tasks.withType(Javadoc) {
+    configure(options) {
+        encoding "UTF-8"
+        docEncoding "UTF-8"
+        charSet "UTF-8"
+        linkSource true
+        noTimestamp true
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.13'
 }
-
