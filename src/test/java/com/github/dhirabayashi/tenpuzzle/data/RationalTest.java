@@ -25,6 +25,12 @@ public class RationalTest {
         assertThat(sut.getNumerator(), is(-1));
         assertThat(sut.getDenominator(), is(5));
         assertThat(Double.compare(sut.doubleValue(), -2. / 10.), is(0));
+
+        sut = new Rational(-15, -35);
+        assertThat(sut.toString(), is("-3/-7"));
+        assertThat(sut.getNumerator(), is(-3));
+        assertThat(sut.getDenominator(), is(-7));
+        assertThat(Double.compare(sut.doubleValue(), -3. / -7.), is(0));
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -26,10 +26,7 @@ public final class Rational {
             throw new IllegalArgumentException("denominator is zero");
         }
 
-        int a = Math.abs(Math.max(numerator, denominator));
-        int b = Math.abs(Math.min(numerator, denominator));
-
-        int g = gcd(a, b);
+        int g = gcd(Math.abs(numerator), Math.abs(denominator));
 
         this.numerator = numerator / g;
         this.denominator = denominator / g;
