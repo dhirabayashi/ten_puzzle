@@ -1,9 +1,7 @@
 package com.github.dhirabayashi.tenpuzzle.rpn;
 
-import org.eclipse.collections.api.list.primitive.CharList;
-import org.eclipse.collections.impl.factory.primitive.CharLists;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +18,7 @@ public final class RPNUtils {
     /**
      * 演算子リスト
      */
-    private static final CharList OPERATORS = CharLists.immutable.of('+', '-', '*', '/');
+    private static final List<Character> OPERATORS = Arrays.asList('+', '-', '*', '/');
 
     /**
      * 式の桁数

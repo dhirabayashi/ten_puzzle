@@ -19,9 +19,6 @@ targetCompatibility = 1.8
 
 dependencies {
     testCompile("junit:junit:4.12")
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
-    compile 'org.eclipse.collections:eclipse-collections-api:7.1.0'
-    compile 'org.eclipse.collections:eclipse-collections:7.1.0'
 }
 
 tasks.withType(JavaCompile) {
@@ -39,5 +36,5 @@ tasks.withType(Javadoc) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
+    gradleVersion = '4.9'
 }
