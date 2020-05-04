@@ -13,7 +13,7 @@ public final class RPNUtils {
     /**
      * オペランドの数
      */
-    private static final int OPERAND_LENGTH = 4;
+    private static final int NUM_LENGTH = 4;
 
     /**
      * 演算子リスト
@@ -23,40 +23,42 @@ public final class RPNUtils {
     /**
      * 式の桁数
      */
-    private static final int EXPRESSION_LENGTH = OPERAND_LENGTH + OPERATORS.size() - 1;
+    private static final int EXPRESSION_LENGTH = NUM_LENGTH + OPERATORS.size() - 1;
 
 
     /**
-     * num を元にありうる逆ポーランド記法の式の全パターンを生成する。戻り値を返さずlist の状態を変更する
+     * num を元にありうる逆ポーランド記法の式の全パターンを生成する。戻り値を返さずresult の状態を変更する
      * @param num 対象の数字
-     * @param list 式を追加するList
-     * @param expression 逆ポーランド記法の式
-     * @param flag 数値が決まったかどうかのフラグ
+     * @param result 式を追加するList
+     * @param expressions 逆ポーランド記法の式
+     * @param numDeterminedFlags 数値が決まったかどうかのフラグ
      * @param numCount 式が含む数値の数
      * @param operatorCount 式が含む演算子の数
      */
-    private static void createRPNExpressionPattern(String num, List<String> list, char[] expression, boolean[] flag, int numCount, int operatorCount) {
+    private static void createRPNExpressionPattern(String num, List<String> result, char[] expressions, boolean[] numDeterminedFlags, int numCount, int operatorCount) {
         // 数値と演算子が全て決まったかどうか
         if(numCount + operatorCount == EXPRESSION_LENGTH) {
-            list.add(new String(expression));
+            result.add(new String(expressions));
+            return;
         }
 
         // 演算子を入れることができるか
         // 演算子の数 = 数値の数 - 1のため、差が2以上あれば演算子を入れる余地がある
         if(2 <= numCount - operatorCount) {
             OPERATORS.forEach(c-> {
-                expression[numCount + operatorCount] = c;
-                createRPNExpressionPattern(num, list, expression, flag, numCount, operatorCount + 1);
+                expressions[numCount + operatorCount] = c;
+                createRPNExpressionPattern(num, result, expressions, numDeterminedFlags, numCount, operatorCount + 1);
             });
         }
 
-        if(numCount < OPERAND_LENGTH) {
-            for(int i = 0; i < OPERAND_LENGTH; i++) {
-                if(!flag[i]) {
-                    flag[i] = true;
-                    expression[numCount + operatorCount] = num.toCharArray()[i];
-                    createRPNExpressionPattern(num, list, expression, flag, numCount + 1, operatorCount);
-                    flag[i] = false;
+        // 数値を入れることができるかどうか
+        if(numCount < NUM_LENGTH) {
+            for(int i = 0; i < NUM_LENGTH; i++) {
+                if(!numDeterminedFlags[i]) {
+                    numDeterminedFlags[i] = true;
+                    expressions[numCount + operatorCount] = num.toCharArray()[i];
+                    createRPNExpressionPattern(num, result, expressions, numDeterminedFlags, numCount + 1, operatorCount);
+                    numDeterminedFlags[i] = false;
                 }
             }
         }
@@ -69,15 +71,15 @@ public final class RPNUtils {
      * @return 逆ポーランド記法の式のList
      */
     public static List<String> createRPNExpressionPattern(String num) {
-        if(num == null || num.length() != OPERAND_LENGTH || !num.matches("^\\d+$")) {
+        if(num == null || !num.matches("^\\d{4}$")) {
             throw  new IllegalArgumentException("num is illegal format.");
         }
 
-        List<String> list = new ArrayList<>();
+        List<String> result = new ArrayList<>();
 
         // boolean の初期値はfalse
-        createRPNExpressionPattern(num, list, new char[EXPRESSION_LENGTH], new boolean[OPERAND_LENGTH], 0, 0);
+        createRPNExpressionPattern(num, result, new char[EXPRESSION_LENGTH], new boolean[NUM_LENGTH], 0, 0);
         // list は可変なので状態が変更されている
-        return list;
+        return result;
     }
 }

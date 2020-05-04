@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 public class TenPuzzle {
 
-    private final double ANSWER = 10.;
+    private static final double ANSWER = 10.;
 
     public static void main(String[] args) {
         TenPuzzle tenPuzzle = new TenPuzzle();
@@ -35,7 +35,7 @@ public class TenPuzzle {
                 .collect(Collectors.toList());
     }
 
-    private final class Result {
+    private static final class Result {
         private final String num;
         private final int size;
         private final String answers;
